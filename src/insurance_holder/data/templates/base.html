@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+
+  <title>{{ page_title or "Insurance Holder" }}</title>
+  <meta name="description"
+        content="{{ meta_description or 'An insurance policy against involuntary disappearance.' }}"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <link href="{{ url_for('static', path='vendor/bootstrap/5.3.8/css/bootstrap.min.css') }}" rel="stylesheet"/>
+  <link href="{{ url_for('static', path='vendor/bootstrap-icons/1.13.1/bootstrap-icons.css') }}" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', path='css/custom.css') }}"/>
+
+<!--  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', path='img/favicon.svg') }}"/>-->
+
+  {% if structured_data %}
+    <script type="application/ld+json" nonce="{{ request.state.csp_nonce }}">
+      {{ structured_data | tojson | safe }}
+    </script>
+  {% endif %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+      <span class="d-none d-md-inline">Insurance Holder</span>
+      <span class="d-inline d-md-none">Insurance</span>
+    </a>
+
+    <!-- Mobile toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="mainNav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        {% block nav_links %}
+          {% if nav_links %}
+            {% for link in nav_links %}
+              <li class="nav-item">
+                {% if link.active %}
+                  <a class="nav-link active disabled" aria-current="page" aria-disabled="true"
+                     href="{{ link.url }}">{{ link.label }}</a>
+                {% else %}
+                  <a class="nav-link" href="{{ link.url }}" target="_self">
+                    {{ link.label }}
+                  </a>
+                {% endif %}
+              </li>
+            {% endfor %}
+          {% endif %}
+        {% endblock %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container py-5 flex-grow-1">
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="border-top py-4 mt-auto">
+  <div class="container text-muted small">
+    © {{ 2026 }} Insurance Holder — by Firefox2100
+  </div>
+</footer>
+
+<script nonce="{{ request.state.csp_nonce }}"
+        src="{{ url_for('static', path='vendor/bootstrap/5.3.8/js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>
+
+{% block scripts %}{% endblock %}

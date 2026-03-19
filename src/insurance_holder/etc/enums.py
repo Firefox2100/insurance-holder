@@ -15,5 +15,6 @@ class CodeType(StrEnum):
 class CountdownStatus(Enum):
     DISABLED = 'disabled'
     HEALTHY = 'healthy'
+    NOTIFYING = 'notifying'
     DUE = 'due'
     TRIGGERED = 'triggered'

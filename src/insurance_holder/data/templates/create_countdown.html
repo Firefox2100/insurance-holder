@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h3 mb-0">Create Countdown</h1>
+      <a class="btn btn-outline-secondary" href="{{ url_for('display_countdowns') }}">Back to Countdowns</a>
+    </div>
+
+    <div id="create-countdown-alert" class="alert d-none" role="alert"></div>
+
+    <form id="create-countdown-form" class="vstack gap-4" novalidate>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="h5 mb-3">Basic Fields</h2>
+          <div class="row g-3">
+            <div class="col-12 col-lg-6">
+              <label class="form-label" for="name">Name</label>
+              <input class="form-control" id="name" name="name" type="text" required>
+            </div>
+            <div class="col-12 col-lg-6">
+              <label class="form-label" for="time">Countdown Time (seconds)</label>
+              <input class="form-control" id="time" name="time" type="number" min="1" step="1" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="description">Description</label>
+              <textarea class="form-control" id="description" name="description" rows="2"></textarea>
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label" for="notification">Notification (seconds)</label>
+              <input class="form-control" id="notification" name="notification" type="number" min="0" step="1">
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label" for="grace">Grace (seconds)</label>
+              <input class="form-control" id="grace" name="grace" type="number" min="0" step="1">
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label" for="firstRun">First Run (epoch seconds, optional)</label>
+              <input class="form-control" id="firstRun" name="firstRun" type="number" min="0" step="1">
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="form-check mt-2">
+                <input class="form-check-input" id="enabled" name="enabled" type="checkbox" checked>
+                <label class="form-check-label" for="enabled">Enabled</label>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="form-check mt-2">
+                <input class="form-check-input" id="public" name="public" type="checkbox">
+                <label class="form-check-label" for="public">Public</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h5 mb-0">Codes</h2>
+            <button type="button" class="btn btn-outline-primary btn-sm" id="add-code-btn">Add Code</button>
+          </div>
+
+          <div id="codes-container" class="vstack gap-3"></div>
+          <p class="text-muted small mb-0 mt-3">At least one code is required.</p>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button id="submit-btn" type="submit" class="btn btn-primary">Create Countdown</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', path='js/countdown-create.js') }}"></script>
+{% endblock %}
